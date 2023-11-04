@@ -1,0 +1,39 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="form" novalidate (ngSubmit)="login()">
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating">E-Mail</ion-label>
+        <ion-input formControlName="email" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Password</ion-label>
+        <ion-input formControlName="password" type="password"></ion-input>
+      </ion-item>
+    </ion-list>
+    <ion-row class="ion-padding">
+      <ion-col>
+        <ion-button type="submit" expand="block" fill="solid" shape="round">
+          Login
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button
+          routerLink="/register"
+          routerDirection="back"
+          type="button"
+          expand="block"
+          fill="outline"
+          shape="round"
+        >
+          Register
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>
