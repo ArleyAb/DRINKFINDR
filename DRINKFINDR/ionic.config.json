@@ -1,0 +1,7 @@
+{
+  "name": "DRINKFINDR",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
