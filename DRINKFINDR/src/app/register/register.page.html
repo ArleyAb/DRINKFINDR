@@ -1,0 +1,74 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>register</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="form" novalidate (ngSubmit)="register()">
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating">
+          E-Mail <ion-text color="danger">*</ion-text>
+        </ion-label>
+        <ion-input
+          formControlName="email"
+          type="email"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">
+          Password <ion-text color="danger">*</ion-text>
+        </ion-label>
+        <ion-input
+          formControlName="password"
+          type="password"
+          minlength="6"
+          #passwordInput
+        ></ion-input>
+        <ion-note slot="error">
+          Your password must have 6 characters minimum
+        </ion-note>
+      </ion-item>
+      <ion-item class="{{confirmedPasswordItemClass}}">
+        <ion-label position="floating" color="{{confirmerdPasswordLabelColor}}">
+          Confirm password
+          <ion-text color="danger">*</ion-text>
+        </ion-label>
+        <ion-input
+          formControlName="confirmedPassword"
+          type="password"
+          (ionInput)="confirmPasswordsMatch()"
+          #confirmedPasswordInput
+        ></ion-input>
+        <ion-note slot="helper" color="danger"> {{errorMessage}} </ion-note>
+      </ion-item>
+    </ion-list>
+    <ion-row class="ion-padding">
+      <ion-col>
+        <ion-button
+          routerLink="/login"
+          routerDirection="back"
+          type="button"
+          expand="block"
+          fill="outline"
+          shape="round"
+        >
+          Login
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button 
+          type="submit" 
+          expand="block" 
+          fill="solid" 
+          shape="round"
+          disabled="{{submitButtonStatus}}"
+          color="{{submitButtonColor}}"
+        >
+          Register
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>

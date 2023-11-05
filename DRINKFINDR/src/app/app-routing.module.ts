@@ -18,6 +18,12 @@ const routes: Routes = [
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule),
     ...canActivate(() => redirectLoggedInTo(['home']))
   },
+  {
+    path: 'register',
+    loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule),
+    ...canActivate(() => redirectLoggedInTo(['home']))
+  },
+
 
 ];
 
