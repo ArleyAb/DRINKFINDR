@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { FirestoreService } from '../services/firestore.service';
 import { Bebederos } from '../interfaces/bebederos';
+import { Facultades } from '../interfaces/facultades';
 
 @Component({
   selector: 'app-home',
@@ -21,14 +22,25 @@ export class HomePage {
 
   ngOnInit(): void {
     this.setBebederosList();
+    this.setFacultadesList();
   }
   
   bebederosList: Bebederos[] = [];
+  facultadesList:Facultades[] = [];
 
   async setBebederosList() {
     this.firestoreService.getListaBebederos().then(async (result) => {
       this.bebederosList = result;
     }).catch((error) => {
+      this.showMsg({'header':'Error','msg':error.message});
+    })
+  }
+
+  async setFacultadesList(){
+    this.firestoreService.getListaFacultades().then(async (result)=>{
+      this.facultadesList = result;
+      console.log(result)
+    }).catch((error)=>{
       this.showMsg({'header':'Error','msg':error.message});
     })
   }
@@ -47,7 +59,6 @@ export class HomePage {
       message: msg,
       buttons: ['OK']
     });
-
     await alert.present();
   }
 }

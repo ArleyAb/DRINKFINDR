@@ -19,7 +19,7 @@
 
 <ion-content [fullscreen]="true">
   <div class="wrapper">
-    <div class="card" *ngFor="let bebedero of bebederosList">
+    <!-- <div class="card" *ngFor="let bebedero of bebederosList">
       <ion-card routerLink="#">
         <ion-card-header>
           <ion-card-title>
@@ -29,6 +29,16 @@
         <ion-card-content>
           {{bebedero.Ubicacion}}
         </ion-card-content>
+      </ion-card>
+    </div> -->
+
+    <div class="card" *ngFor="let facultad of facultadesList">
+      <ion-card routerLink="#">
+        <ion-card-header>
+          <ion-card-title>
+            {{facultad.nombre}}
+          </ion-card-title>
+        </ion-card-header>
       </ion-card>
     </div>
   </div>
