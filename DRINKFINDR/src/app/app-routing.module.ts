@@ -5,8 +5,7 @@ import { redirectUnauthorizedTo, redirectLoggedInTo, canActivate } from '@angula
 const routes: Routes = [
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule),
-    ...canActivate(() => redirectUnauthorizedTo(['login']))
+    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
   },
   {
     path: '',
@@ -23,8 +22,11 @@ const routes: Routes = [
     loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule),
     ...canActivate(() => redirectLoggedInTo(['home']))
   },
-
-
+  {
+    path: 'resena',
+    loadChildren: () => import('./resena/resena.module').then( m => m.ResenaPageModule),
+    ...canActivate(() => redirectUnauthorizedTo(['login']))
+  }
 ];
 
 @NgModule({
