@@ -1,45 +1,52 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+<ion-menu contentId="main-content">
+  <!-- Menu de la izquierda -->
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Facultades</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+    <!-- Botones de menu izquierda -->
+   <div class="wrap">
     <ion-buttons slot="end">
-      <ion-button
-        type="button"
-        expand="block"
-        fill="outline"
-        shape="round"
-        (click)="logout()"
-      >
-        Logout
+      <ion-button type="button" expand="block" fill="outline" shape="round" routerLink="/home">
+        Facultades
       </ion-button>
     </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <div class="wrapper">
-    <!-- <div class="card" *ngFor="let bebedero of bebederosList">
-      <ion-card routerLink="#">
-        <ion-card-header>
-          <ion-card-title>
-            {{bebedero.Facultad}}
-          </ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          {{bebedero.Ubicacion}}
-        </ion-card-content>
-      </ion-card>
-    </div> -->
-
-    <div class="card" *ngFor="let facultad of facultadesList">
-      <ion-card routerLink="#">
-        <ion-card-header>
-          <ion-card-title>
-            {{facultad.nombre}}
-          </ion-card-title>
-        </ion-card-header>
-      </ion-card>
+   </div>
+  </ion-content>
+</ion-menu>
+<div class="ion-page" id="main-content">
+  <ion-header>
+    <!-- Header con su contenido -->
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Facultades</ion-title>
+      <ion-buttons slot="end">
+        <ion-button type="button" expand="block" fill="outline" shape="round" (click)="logout()">
+          Logout
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+<!-- Contenido -->
+    <div class="wrapper">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6" class="card" *ngFor="let facultad of facultadesList" [routerLink]="['/', facultad.ID]">
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title class="ion-text-center">
+                  {{facultad.nombre}}
+                </ion-card-title>
+              </ion-card-header>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </div>
-  </div>
-</ion-content>
+  </ion-content>
+</div>

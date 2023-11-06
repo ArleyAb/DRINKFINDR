@@ -26,6 +26,14 @@ const routes: Routes = [
     path: 'resena',
     loadChildren: () => import('./resena/resena.module').then( m => m.ResenaPageModule),
     ...canActivate(() => redirectUnauthorizedTo(['login']))
+  },
+  {
+    path: ':id',
+    loadChildren: () => import('./facultad/facultad.module').then( m => m.FacultadPageModule)
+  },
+  {
+    path: 'bebederos',
+    loadChildren: () => import('./bebederos/bebederos.module').then( m => m.BebederosPageModule)
   }
 ];
 
