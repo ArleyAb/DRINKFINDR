@@ -26,7 +26,7 @@ export class BebederosPage implements OnInit {
         this.bebederosList = result;
       })
       .catch((error) => {
-        console.log('erro');
+        console.log('Error');
         this.showMsg({ header: 'Error', msg: error.message });
       });
   }

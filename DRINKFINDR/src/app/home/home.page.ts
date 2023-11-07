@@ -13,7 +13,6 @@ import { Facultades } from '../interfaces/facultades';
 export class HomePage {
   constructor(
     private authService: AuthService,
-    private router: Router,
     private alertController: AlertController,
     private firestoreService: FirestoreService
   ) {}

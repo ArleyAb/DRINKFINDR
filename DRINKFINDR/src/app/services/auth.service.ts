@@ -40,4 +40,8 @@ export class AuthService {
   register({email, password}: any){
     return createUserWithEmailAndPassword(this.auth, email, password);
   }
+
+  getUserEmail(){
+    return this.auth.currentUser?.email;
+  }
 }

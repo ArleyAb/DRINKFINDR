@@ -1,7 +1,6 @@
 export interface Resenas {
   ID: string,
-  author: string,
-  bebedero: any,
-  fecha: Date,
+  bebedero: string,
+  fecha: string,
   resena: string
 }

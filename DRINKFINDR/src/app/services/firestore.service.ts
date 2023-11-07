@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { initializeApp } from '@angular/fire/app';
-import { getFirestore, setDoc, doc, getDoc, getDocs, collection } from '@angular/fire/firestore';
+import { getFirestore, getDocs, collection, query, where, getDoc, setDoc, doc,  } from '@angular/fire/firestore';
 import { environment } from 'src/environments/environment';
 import { Bebederos } from '../interfaces/bebederos';
 import { Facultades } from '../interfaces/facultades';
+import { Resenas } from '../interfaces/resenas';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -14,7 +16,7 @@ export class FirestoreService {
     const db = getFirestore(initializeApp(environment.firebaseConfig));
     const docs = await getDocs(collection(db, 'bebederos'));
 
-    var bebederos:Bebederos[] = [];
+    let bebederos:Bebederos[] = [];
 
     docs.forEach(async (doc) => {
       let data = doc.data();
@@ -22,7 +24,8 @@ export class FirestoreService {
       let bebedero: Bebederos = {
         'ID': doc.id,
         'Facultad': data['Facultad'],
-        'Ubicacion': data['Ubicacion']
+        'Ubicacion': data['Ubicacion'],
+        'Resenas': data['Resenas']
       };
 
       bebederos.push(bebedero);
@@ -45,5 +48,51 @@ export class FirestoreService {
       facultades.push(facultad);
     })
     return facultades;
+  }
+
+  async getListaResenas(bebederoID: string){
+    const db = getFirestore(initializeApp(environment.firebaseConfig));
+    const q = query(collection(db, "resenas"), where("bebedero", "==", bebederoID));
+    const docs = await getDocs(q);
+
+    let resenasList:Resenas[] = [];
+
+    docs.forEach((doc) => {
+      let data = doc.data();
+
+      let resena:Resenas = {
+        'ID': doc.id,
+        'bebedero': data['bebedero'],
+        'fecha': new Date(data['fecha'].toDate()).toLocaleString(),
+        'resena': data['resena']
+      };
+
+      resenasList.push(resena);
+    })
+    return resenasList;
+  }
+
+  async postNewResena(resena:Resenas){
+    const db = getFirestore(initializeApp(environment.firebaseConfig));
+
+    // Save the resena
+    await setDoc(doc(db, 'resenas', resena.ID), {
+      'bebedero': resena.bebedero,
+      'fecha': resena.fecha,
+      'resena': resena.resena
+    });
+
+    // Update the bebedero's resenas count
+    let bebedero_doc = doc(db, 'bebederos', resena.bebedero);
+    // Get the old count
+    let bebedero = await getDoc(bebedero_doc);
+    // Save the new values
+    await setDoc((bebedero_doc), {
+      'Facultad': bebedero.get('Facultad'),
+      'Ubicacion': bebedero.get('Ubicacion'),
+      'Resenas': bebedero.get('Resenas') + 1
+    })
+
+    return resena;
   }
 }

@@ -1,5 +1,6 @@
 export interface Bebederos {
   ID: string,
   Facultad: string,
-  Ubicacion: string
+  Ubicacion: string,
+  Resenas: number
 }

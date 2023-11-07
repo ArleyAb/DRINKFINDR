@@ -17,9 +17,8 @@
       <div class="card" *ngFor="let bebedero of bebederosList" [routerLink]="['/bebedero',bebedero.ID]">
       <ion-card >
         <ion-card-header>
-          <ion-card-title>
-            {{bebedero.Facultad}}
-          </ion-card-title>
+          <ion-card-title>{{bebedero.ID}}</ion-card-title>
+          <ion-card-subtitle>{{bebedero.Resenas}} reseñas</ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
           {{bebedero.Ubicacion}}
