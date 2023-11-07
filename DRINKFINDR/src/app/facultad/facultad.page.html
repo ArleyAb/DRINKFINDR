@@ -11,7 +11,7 @@
     </ion-toolbar>
   </ion-header>
 
-      <div class="card" *ngFor="let bebedero of bebederosList">
+      <div class="card" *ngFor="let bebedero of bebederosList" [routerLink]="['/bebedero',bebedero.ID]">
       <ion-card >
         <ion-card-header>
           <ion-card-title>
