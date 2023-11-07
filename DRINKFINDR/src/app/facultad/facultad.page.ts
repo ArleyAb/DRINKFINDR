@@ -19,6 +19,7 @@ export class FacultadPage implements OnInit {
   ) {}
 
   ngOnInit() {
+
     this.route.params.subscribe((params) => {
       this.id = params['id'];
       this.facultad = this.id;
@@ -27,12 +28,13 @@ export class FacultadPage implements OnInit {
   }
 
   async setBebederosList() {
-    this.firestoreService
+    await this.firestoreService
       .getListaBebederos()
-      .then(async (result) => {
-        this.bebederosList = result.filter(item => item.Facultad === this.id);
+      .then(result => {
+        this.bebederosList =  result.filter(item => item.Facultad === this.id);
       })
       .catch((error) => {
+        console.log('erro')
         this.showMsg({ header: 'Error', msg: error.message });
       });
   }

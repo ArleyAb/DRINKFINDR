@@ -11,7 +11,6 @@ import { Facultades } from '../interfaces/facultades';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-
 export class HomePage {
   constructor(
     private authService: AuthService,
@@ -21,43 +20,47 @@ export class HomePage {
   ) {}
 
   ngOnInit(): void {
-    this.setBebederosList();
+    // this.setBebederosList();
     this.setFacultadesList();
   }
-  
-  bebederosList: Bebederos[] = [];
-  facultadesList:Facultades[] = [];
 
-  async setBebederosList() {
-    this.firestoreService.getListaBebederos().then(async (result) => {
-      this.bebederosList = result;
-    }).catch((error) => {
-      this.showMsg({'header':'Error','msg':error.message});
-    })
+  facultadesList: Facultades[] = [];
+
+  // async setBebederosList() {
+  //   this.firestoreService.getListaBebederos().then(async (result) => {
+  //     this.bebederosList = result;
+  //   }).catch((error) => {
+  //     this.showMsg({'header':'Error','msg':error.message});
+  //   })
+  // }
+
+  async setFacultadesList() {
+    await this.firestoreService
+      .getListaFacultades()
+      .then((result) => {
+        this.facultadesList = result;
+      })
+      .catch((error) => {
+        this.showMsg({ header: 'Error', msg: error.message });
+      });
   }
 
-  async setFacultadesList(){
-    this.firestoreService.getListaFacultades().then(async (result)=>{
-      this.facultadesList = result;
-      console.log(result)
-    }).catch((error)=>{
-      this.showMsg({'header':'Error','msg':error.message});
-    })
+  logout() {
+    this.authService
+      .logout()
+      .then(() => {
+        this.router.navigate(['/login']);
+      })
+      .catch((error) => {
+        this.showMsg({ header: 'Error', msg: error.message });
+      });
   }
 
-  logout(){
-    this.authService.logout().then(() => {
-      this.router.navigate(['/login']);
-    }).catch((error) => {
-      this.showMsg({'header':'Error','msg':error.message});
-    });
-  }
-
-  async showMsg({header, msg}: any){
+  async showMsg({ header, msg }: any) {
     const alert = await this.alertController.create({
       header: header,
       message: msg,
-      buttons: ['OK']
+      buttons: ['OK'],
     });
     await alert.present();
   }

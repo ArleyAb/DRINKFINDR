@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { BebederosPageRoutingModule } from './bebederos-routing.module';
+import { BebederoPageRoutingModule } from './bebedero-routing.module';
 
-import { BebederosPage } from './bebederos.page';
+import { BebederoPage } from './bebedero.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    BebederosPageRoutingModule
+    BebederoPageRoutingModule
   ],
-  declarations: [BebederosPage]
+  declarations: [BebederoPage]
 })
-export class BebederosPageModule {}
+export class BebederoPageModule {}

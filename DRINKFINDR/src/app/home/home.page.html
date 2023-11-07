@@ -12,6 +12,9 @@
       <ion-button type="button" expand="block" fill="outline" shape="round" routerLink="/home">
         Facultades
       </ion-button>
+      <ion-button type="button" expand="block" fill="outline" shape="round" routerLink="/bebederos">
+        Bebederos
+      </ion-button>
     </ion-buttons>
    </div>
   </ion-content>
@@ -36,7 +39,7 @@
     <div class="wrapper">
       <ion-grid>
         <ion-row>
-          <ion-col size="6" class="card" *ngFor="let facultad of facultadesList" [routerLink]="['/', facultad.ID]">
+          <ion-col size="6" class="card" *ngFor="let facultad of facultadesList" [routerLink]="['/home', facultad.ID]">
             <ion-card>
               <ion-card-header>
                 <ion-card-title class="ion-text-center">

@@ -28,13 +28,13 @@ const routes: Routes = [
     ...canActivate(() => redirectUnauthorizedTo(['login']))
   },
   {
-    path: ':id',
+    path: 'home/:id',
     loadChildren: () => import('./facultad/facultad.module').then( m => m.FacultadPageModule)
   },
   {
     path: 'bebederos',
-    loadChildren: () => import('./bebederos/bebederos.module').then( m => m.BebederosPageModule)
-  }
+    loadChildren: () => import('./bebedero/bebedero.module').then( m => m.BebederoPageModule),
+  },
 ];
 
 @NgModule({
