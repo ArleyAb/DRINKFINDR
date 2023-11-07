@@ -3,7 +3,6 @@ import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { FirestoreService } from '../services/firestore.service';
-import { Bebederos } from '../interfaces/bebederos';
 import { Facultades } from '../interfaces/facultades';
 
 @Component({
@@ -20,20 +19,19 @@ export class HomePage {
   ) {}
 
   ngOnInit(): void {
-    // this.setBebederosList();
     this.setFacultadesList();
+    this.getUserStatus();
   }
-
+  
   facultadesList: Facultades[] = [];
-
-  // async setBebederosList() {
-  //   this.firestoreService.getListaBebederos().then(async (result) => {
-  //     this.bebederosList = result;
-  //   }).catch((error) => {
-  //     this.showMsg({'header':'Error','msg':error.message});
-  //   })
-  // }
-
+  userStatus:boolean = false;
+  
+  private getUserStatus() {
+    this.authService.getUserStatus$().subscribe((status) => {
+      this.userStatus = status;
+    })
+  }
+  
   async setFacultadesList() {
     await this.firestoreService
       .getListaFacultades()
@@ -47,11 +45,7 @@ export class HomePage {
 
   logout() {
     this.authService
-      .logout()
-      .then(() => {
-        this.router.navigate(['/login']);
-      })
-      .catch((error) => {
+      .logout().catch((error) => {
         this.showMsg({ header: 'Error', msg: error.message });
       });
   }

@@ -3,6 +3,5 @@ export interface Resenas {
   author: string,
   bebedero: any,
   fecha: Date,
-  likes: number,
   resena: string
 }

@@ -19,7 +19,6 @@ export class FacultadPage implements OnInit {
   ) {}
 
   ngOnInit() {
-
     this.route.params.subscribe((params) => {
       this.id = params['id'];
       this.facultad = this.id;

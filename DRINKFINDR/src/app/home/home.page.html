@@ -2,21 +2,29 @@
   <!-- Menu de la izquierda -->
   <ion-header>
     <ion-toolbar>
-      <ion-title>Facultades</ion-title>
+      <ion-title>Menu</ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-content class="ion-padding">
     <!-- Botones de menu izquierda -->
-   <div class="wrap">
-    <ion-buttons slot="end">
-      <ion-button type="button" expand="block" fill="outline" shape="round" routerLink="/home">
-        Facultades
-      </ion-button>
-      <ion-button type="button" expand="block" fill="outline" shape="round" routerLink="/bebederos">
-        Bebederos
-      </ion-button>
-    </ion-buttons>
-   </div>
+    <ion-list>
+      <ion-item [routerLink]="'/home'">
+        <ion-icon slot="start" name="business-outline"></ion-icon>
+        <ion-label>Facultades</ion-label>
+      </ion-item>
+      <ion-item [routerLink]="'/bebederos'">
+        <ion-icon slot="start" name="water-outline"></ion-icon>
+        <ion-label>Todos lo bebederos</ion-label>
+      </ion-item>
+      <ion-item *ngIf="!(userStatus)" [routerLink]="'/login'">
+        <ion-icon slot="start" name="log-in-outline"></ion-icon>
+        <ion-label>Log in</ion-label>
+      </ion-item>
+      <ion-item *ngIf="userStatus" (click)="logout()">
+        <ion-icon slot="start" name="log-out-outline"></ion-icon>
+        <ion-label>Log out</ion-label>
+      </ion-item>
+    </ion-list>
   </ion-content>
 </ion-menu>
 <div class="ion-page" id="main-content">
@@ -27,11 +35,6 @@
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
       <ion-title>Facultades</ion-title>
-      <ion-buttons slot="end">
-        <ion-button type="button" expand="block" fill="outline" shape="round" (click)="logout()">
-          Logout
-        </ion-button>
-      </ion-buttons>
     </ion-toolbar>
   </ion-header>
   <ion-content class="ion-padding">
