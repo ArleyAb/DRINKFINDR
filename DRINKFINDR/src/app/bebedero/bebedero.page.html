@@ -1,25 +1,21 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Bebederos</ion-title>
+    <ion-title>bebedero</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Bebederos</ion-title>
+      <ion-title size="large">bebedero</ion-title>
     </ion-toolbar>
   </ion-header>
-  <div class="card" *ngFor="let bebedero of bebederosList">
-    <ion-card routerLink="#">
-      <ion-card-header>
-        <ion-card-title>
-          {{bebedero.Facultad}}
-        </ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        {{bebedero.Ubicacion}}
-      </ion-card-content>
-    </ion-card>
-  </div>
+
+  <h3>Comentarios</h3>
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
 </ion-content>

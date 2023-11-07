@@ -33,8 +33,12 @@ const routes: Routes = [
   },
   {
     path: 'bebederos',
-    loadChildren: () => import('./bebedero/bebedero.module').then( m => m.BebederoPageModule),
+    loadChildren: () => import('./bebederos/bebederos.module').then( m => m.BebederosPageModule)
   },
+  {
+    path: 'bebedero/:id',
+    loadChildren: () => import('./bebedero/bebedero.module').then( m => m.BebederoPageModule)
+  }
 ];
 
 @NgModule({
