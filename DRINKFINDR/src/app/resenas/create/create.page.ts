@@ -24,6 +24,8 @@ export class CreatePage implements OnInit {
 
   ngOnInit() {
     // Get the bebedero's id
+    let author = this.authService.getUserEmail();
+    console.log(author)
     this.bebederoID = this.activatedRouter.snapshot.params['id'];
   }
 
@@ -35,6 +37,7 @@ export class CreatePage implements OnInit {
   saveResena(){
     let res = this.form.value.resena;
     let author = this.authService.getUserEmail();
+    console.log(author)
     
     if (res && author){
       let resena:ResenaToSend = {

@@ -61,6 +61,12 @@ export class UpdatePage implements OnInit {
     };
   }
 
+  deleteResena(){
+    this.firestoreService.deleteResena(this.resenaID).then(()=>{
+      this.router.navigate(['/bebederos'])
+    });
+  }
+
   async showMsg({header, msg}: any){
     const alert = await this.alertController.create({
       header: header,

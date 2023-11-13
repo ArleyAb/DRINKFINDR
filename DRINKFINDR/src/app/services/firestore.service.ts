@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { initializeApp } from '@angular/fire/app';
-import { getFirestore, getDocs, collection, query, where, getDoc, setDoc, doc, Timestamp, onSnapshot,  } from '@angular/fire/firestore';
+import { getFirestore, getDocs, collection, query, where, getDoc, setDoc, doc, Timestamp, onSnapshot, deleteDoc,  } from '@angular/fire/firestore';
 import { environment } from 'src/environments/environment';
 import { Bebederos } from '../interfaces/bebederos';
 import { Facultades } from '../interfaces/facultades';
@@ -19,7 +19,7 @@ export class FirestoreService {
     let bebederos:Bebederos[] = [];
 
     docs.forEach(async (doc) => {
-      let data = doc.data();
+      let data = await doc.data();
 
       let bebedero: Bebederos = {
         'ID': doc.id,
@@ -81,7 +81,7 @@ export class FirestoreService {
 
   async getListaResenas(bebederoID: string){
     const db = getFirestore(initializeApp(environment.firebaseConfig));
-    const q = query(collection(db, "resenas"), where("bebedero", "==", bebederoID));
+    const q = await query(collection(db, "resenas"), where("bebedero", "==", bebederoID));
     //const docs = await getDocs(q);
     let resenasList:Resenas[] = [];
 
@@ -170,4 +170,11 @@ export class FirestoreService {
       'Resenas': bebedero.get('Resenas') + 1
     })
   }
+  async deleteResena(id:string) {
+    if (id != null) {
+      // Delete from Firestore
+      const db = getFirestore(initializeApp(environment.firebaseConfig));
+      deleteDoc(doc(db, 'resenas', id));
+    }
+  }
 }

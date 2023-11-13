@@ -11,20 +11,48 @@
   <div *ngIf="resenas.length">
     <h3>Reseñas</h3>
     <ion-list *ngFor="let resena of resenas">
-      <ion-card [routerLink]="['/resenas/update', resena.ID]">
-        <ion-card-header>
-          <ion-card-title>
-            <span *ngIf="resena.fecha == currentDate">
-              {{resena.hora}}
-            </span>
-            <span *ngIf="resena.fecha != currentDate">
-              {{resena.fecha}}
-            </span>
-          </ion-card-title>
-          <ion-card-subtitle>{{resena.autor}}</ion-card-subtitle>
-        </ion-card-header>
-        <ion-card-content>{{resena.resena}}</ion-card-content>
-      </ion-card>
+      <div *ngIf="resena.autor === email">
+        <ion-card [routerLink]="['/resenas/update', resena.ID]">
+          <ion-card-header>
+            <ion-card-title>
+              <span *ngIf="resena.fecha == currentDate">
+                {{resena.hora}}
+              </span>
+              <span *ngIf="resena.fecha != currentDate">
+                {{resena.fecha}}
+              </span>
+            </ion-card-title>
+              <div *ngIf="resena.autor === email">
+                <ion-card-subtitle>You</ion-card-subtitle>
+              </div>
+              <div *ngIf="resena.autor != email">
+                <ion-card-subtitle>{{resena.autor}}</ion-card-subtitle>
+              </div>
+          </ion-card-header>
+          <ion-card-content>{{resena.resena}}</ion-card-content>
+        </ion-card>
+      </div>
+      <div *ngIf="resena.autor != email">
+        <ion-card >
+          <ion-card-header>
+            <ion-card-title>
+              <span *ngIf="resena.fecha == currentDate">
+                {{resena.hora}}
+              </span>
+              <span *ngIf="resena.fecha != currentDate">
+                {{resena.fecha}}
+              </span>
+            </ion-card-title>
+              <div *ngIf="resena.autor === email">
+                <ion-card-subtitle>You</ion-card-subtitle>
+              </div>
+              <div *ngIf="resena.autor != email">
+                <ion-card-subtitle>{{resena.autor}}</ion-card-subtitle>
+              </div>
+          </ion-card-header>
+          <ion-card-content>{{resena.resena}}</ion-card-content>
+        </ion-card>
+      </div>
     </ion-list>
   </div>
   <div *ngIf="resenas.length == 0">
