@@ -8,10 +8,10 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-  <h3>Reseñas</h3>
-  <div>
+  <div *ngIf="resenas.length">
+    <h3>Reseñas</h3>
     <ion-list *ngFor="let resena of resenas">
-      <ion-card>
+      <ion-card [routerLink]="['/resenas/update', resena.ID]">
         <ion-card-header>
           <ion-card-title>
             <span *ngIf="resena.fecha == currentDate">
@@ -26,6 +26,9 @@
         <ion-card-content>{{resena.resena}}</ion-card-content>
       </ion-card>
     </ion-list>
+  </div>
+  <div *ngIf="resenas.length == 0">
+    <h3>Aún no hay reseñas</h3>
   </div>
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
     <ion-fab-button routerLink="/resenas/create">

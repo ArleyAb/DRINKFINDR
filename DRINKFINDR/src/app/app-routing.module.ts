@@ -43,7 +43,7 @@ const routes: Routes = [
         loadChildren: () => import('./resenas/create/create.module').then( m => m.CreatePageModule)
       },
       {
-        path: 'update',
+        path: 'update/:id',
         loadChildren: () => import('./resenas/update/update.module').then( m => m.UpdatePageModule)
       }
     ]

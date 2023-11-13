@@ -33,7 +33,7 @@ export class FacultadPage implements OnInit {
         this.bebederosList =  result.filter(item => item.Facultad === this.id);
       })
       .catch((error) => {
-        console.log('erro')
+        console.log('error')
         this.showMsg({ header: 'Error', msg: error.message });
       });
   }

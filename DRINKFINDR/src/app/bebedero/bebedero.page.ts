@@ -23,7 +23,7 @@ export class BebederoPage implements OnInit {
     // Get the bebedero's resenas list
     this.getListaResenas();
   }
-
+  
   bebederoID:string = '';
   resenas:Resenas[] = [];
   currentDate: string = new Date().toLocaleDateString();
