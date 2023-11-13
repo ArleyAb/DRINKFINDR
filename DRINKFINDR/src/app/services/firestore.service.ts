@@ -59,11 +59,38 @@ export class FirestoreService {
 
     docs.forEach((doc) => {
       let data = doc.data();
+      let fecha = new Date(data['fecha'].toDate());
+      let hora = fecha.getHours();
+      let minutos = fecha.getMinutes();
+      let periodo = ' am'
+      let time;
+      
+      if (hora > 12){
+        hora -= 12;
+        periodo = ' pm';
+      }
 
+      if (hora < 10)
+        time = '0' + hora.toString();
+      else
+        time = hora.toString();
+
+      if (minutos < 10)
+        time += ':0' + minutos.toString();
+      else
+        time += ':' + minutos.toString();
+
+      if (hora == 12)
+        periodo = ' pm';
+      
+      time += periodo;
+      
       let resena:Resenas = {
         'ID': doc.id,
         'bebedero': data['bebedero'],
-        'fecha': new Date(data['fecha'].toDate()).toLocaleString(),
+        'autor': data['autor'],
+        'fecha': fecha.toLocaleDateString(),
+        'hora': time,
         'resena': data['resena']
       };
 

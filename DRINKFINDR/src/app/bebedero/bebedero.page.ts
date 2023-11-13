@@ -26,6 +26,7 @@ export class BebederoPage implements OnInit {
 
   bebederoID:string = '';
   resenas:Resenas[] = [];
+  currentDate: string = new Date().toLocaleDateString();
 
   getListaResenas(){
     this.firestoreService.getListaResenas(this.bebederoID).then((result) => {
