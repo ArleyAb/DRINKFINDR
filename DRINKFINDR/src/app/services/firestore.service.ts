@@ -5,7 +5,6 @@ import { environment } from 'src/environments/environment';
 import { Bebederos } from '../interfaces/bebederos';
 import { Facultades } from '../interfaces/facultades';
 import { ResenaToSend, Resenas } from '../interfaces/resenas';
-import { orderBy } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -149,12 +148,19 @@ export class FirestoreService {
     // Save the resena
     await setDoc(doc(db, 'resenas', resena.ID), {
       'bebedero': resena.bebedero,
-      'fecha': resena.fecha,
+      'autor': resena.autor,
+      'fecha': Timestamp.fromDate(new Date()),
       'resena': resena.resena
     });
 
+    return resena;
+  }
+
+  async updateResenasCount(bebederoID: string){
+    const db = getFirestore(initializeApp(environment.firebaseConfig));
+    
     // Update the bebedero's resenas count
-    let bebedero_doc = doc(db, 'bebederos', resena.bebedero);
+    let bebedero_doc = doc(db, 'bebederos', bebederoID);
     // Get the old count
     let bebedero = await getDoc(bebedero_doc);
     // Save the new values
@@ -163,7 +169,5 @@ export class FirestoreService {
       'Ubicacion': bebedero.get('Ubicacion'),
       'Resenas': bebedero.get('Resenas') + 1
     })
-
-    return resena;
   }
 }

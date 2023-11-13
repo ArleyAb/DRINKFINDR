@@ -39,7 +39,7 @@ const routes: Routes = [
     ...canActivate(() => redirectUnauthorizedTo(['login'])),
     children: [
       {
-        path: 'create',
+        path: 'create/:id',
         loadChildren: () => import('./resenas/create/create.module').then( m => m.CreatePageModule)
       },
       {

@@ -31,7 +31,7 @@
     <h3>Aún no hay reseñas</h3>
   </div>
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button routerLink="/resenas/create">
+    <ion-fab-button [routerLink]="['/resenas/create', bebederoID]">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
