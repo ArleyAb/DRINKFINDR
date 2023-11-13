@@ -50,6 +50,35 @@ export class FirestoreService {
     return facultades;
   }
 
+  getTime(fecha: Date){
+    let hora = fecha.getHours();
+    let minutos = fecha.getMinutes();
+    let periodo = ' am'
+    let time;
+    
+    if (hora > 12){
+      hora -= 12;
+      periodo = ' pm';
+    }
+
+    if (hora < 10)
+      time = '0' + hora.toString();
+    else
+      time = hora.toString();
+
+    if (minutos < 10)
+      time += ':0' + minutos.toString();
+    else
+      time += ':' + minutos.toString();
+
+    if (hora == 12)
+      periodo = ' pm';
+    
+    time += periodo;
+
+    return time;
+  }
+
   async getListaResenas(bebederoID: string){
     const db = getFirestore(initializeApp(environment.firebaseConfig));
     const q = query(collection(db, "resenas"), where("bebedero", "==", bebederoID));
@@ -60,43 +89,48 @@ export class FirestoreService {
     docs.forEach((doc) => {
       let data = doc.data();
       let fecha = new Date(data['fecha'].toDate());
-      let hora = fecha.getHours();
-      let minutos = fecha.getMinutes();
-      let periodo = ' am'
-      let time;
-      
-      if (hora > 12){
-        hora -= 12;
-        periodo = ' pm';
-      }
-
-      if (hora < 10)
-        time = '0' + hora.toString();
-      else
-        time = hora.toString();
-
-      if (minutos < 10)
-        time += ':0' + minutos.toString();
-      else
-        time += ':' + minutos.toString();
-
-      if (hora == 12)
-        periodo = ' pm';
-      
-      time += periodo;
       
       let resena:Resenas = {
         'ID': doc.id,
         'bebedero': data['bebedero'],
         'autor': data['autor'],
         'fecha': fecha.toLocaleDateString(),
-        'hora': time,
+        'hora': this.getTime(fecha),
         'resena': data['resena']
       };
 
       resenasList.push(resena);
-    })
+    });
     return resenasList;
+  }
+
+
+  async getResena(resenaID: string){
+    const db = getFirestore(initializeApp(environment.firebaseConfig));
+    
+    let result = await getDoc(doc(db, 'resenas', resenaID));
+    let data = result.data();
+    
+    let resena: Resenas = {
+      'ID': result.id,
+      'autor': '',
+      'bebedero': '',
+      'fecha': '',
+      'hora': '',
+      'resena': ''
+    };
+
+    if (data){
+      resena.autor = data['autor'];
+      resena.bebedero = data['bebedero'];
+      resena.resena = data['resena'];
+      
+      let fecha = new Date(data['fecha'].toDate());
+      resena.fecha = fecha.toLocaleDateString();
+      resena.hora  =this.getTime(fecha);
+    }
+
+    return resena;
   }
 
   async postNewResena(resena:Resenas){
