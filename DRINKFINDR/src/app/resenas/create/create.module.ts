@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ResenaPageRoutingModule } from './resena-routing.module';
+import { CreatePageRoutingModule } from './create-routing.module';
 
-import { ResenaPage } from './resena.page';
+import { CreatePage } from './create.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ResenaPageRoutingModule
+    CreatePageRoutingModule
   ],
-  declarations: [ResenaPage]
+  declarations: [CreatePage]
 })
-export class ResenaPageModule {}
+export class CreatePageModule {}

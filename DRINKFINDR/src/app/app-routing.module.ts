@@ -23,11 +23,6 @@ const routes: Routes = [
     ...canActivate(() => redirectLoggedInTo(['home']))
   },
   {
-    path: 'resena',
-    loadChildren: () => import('./resena/resena.module').then( m => m.ResenaPageModule),
-    ...canActivate(() => redirectUnauthorizedTo(['login']))
-  },
-  {
     path: 'home/:id',
     loadChildren: () => import('./facultad/facultad.module').then( m => m.FacultadPageModule)
   },
@@ -38,6 +33,20 @@ const routes: Routes = [
   {
     path: 'bebedero/:id',
     loadChildren: () => import('./bebedero/bebedero.module').then( m => m.BebederoPageModule)
+  },
+  {
+    path: 'resenas',
+    ...canActivate(() => redirectUnauthorizedTo(['login'])),
+    children: [
+      {
+        path: 'create',
+        loadChildren: () => import('./resenas/create/create.module').then( m => m.CreatePageModule)
+      },
+      {
+        path: 'update',
+        loadChildren: () => import('./resenas/update/update.module').then( m => m.UpdatePageModule)
+      }
+    ]
   }
 ];
 
