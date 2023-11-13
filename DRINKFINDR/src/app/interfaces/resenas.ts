@@ -6,3 +6,10 @@ export interface Resenas {
   hora: string,
   resena: string
 }
+
+export interface ResenaToSend {
+  ID: string,
+  bebedero: string,
+  autor: string,
+  resena: string
+}

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-import { Resenas } from 'src/app/interfaces/resenas';
+import { ResenaToSend, Resenas } from 'src/app/interfaces/resenas';
 import { FirestoreService } from 'src/app/services/firestore.service';
 
 @Component({
@@ -16,7 +16,8 @@ export class UpdatePage implements OnInit {
     private activatedRouter: ActivatedRoute,
     private formBuilder: FormBuilder,
     private alertController: AlertController,
-    private firestoreService: FirestoreService
+    private firestoreService: FirestoreService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -30,12 +31,10 @@ export class UpdatePage implements OnInit {
     resena: ['', [Validators.required]]
   });
   resenaID: string = '';
-  resena: Resenas = {
+  resena: ResenaToSend = {
     'ID':'',
     'autor': '',
     'bebedero': '',
-    'fecha': '',
-    'hora': '',
     'resena': ''
   };
 
@@ -49,7 +48,17 @@ export class UpdatePage implements OnInit {
 
   saveChanges() {
     let res = this.form.value.resena;
-    console.log(res);
+    
+    if (res){
+      this.resena.resena = res;
+
+      this.firestoreService.updateResena(this.resena).then(() => {
+        this.showMsg({'header':'Reseña actualizada', 'msg':''});
+        this.router.navigate(['/bebedero', this.resena.bebedero])
+      }).catch((error) => {
+        this.showMsg({'header':'Error', 'msg':error.message})
+      })
+    };
   }
 
   async showMsg({header, msg}: any){

@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { initializeApp } from '@angular/fire/app';
-import { getFirestore, getDocs, collection, query, where, getDoc, setDoc, doc,  } from '@angular/fire/firestore';
+import { getFirestore, getDocs, collection, query, where, getDoc, setDoc, doc, Timestamp, onSnapshot,  } from '@angular/fire/firestore';
 import { environment } from 'src/environments/environment';
 import { Bebederos } from '../interfaces/bebederos';
 import { Facultades } from '../interfaces/facultades';
-import { Resenas } from '../interfaces/resenas';
+import { ResenaToSend, Resenas } from '../interfaces/resenas';
+import { orderBy } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -82,25 +83,29 @@ export class FirestoreService {
   async getListaResenas(bebederoID: string){
     const db = getFirestore(initializeApp(environment.firebaseConfig));
     const q = query(collection(db, "resenas"), where("bebedero", "==", bebederoID));
-    const docs = await getDocs(q);
-
+    //const docs = await getDocs(q);
     let resenasList:Resenas[] = [];
 
-    docs.forEach((doc) => {
-      let data = doc.data();
-      let fecha = new Date(data['fecha'].toDate());
-      
-      let resena:Resenas = {
-        'ID': doc.id,
-        'bebedero': data['bebedero'],
-        'autor': data['autor'],
-        'fecha': fecha.toLocaleDateString(),
-        'hora': this.getTime(fecha),
-        'resena': data['resena']
-      };
+    const docs = onSnapshot(q, (docs) => {
+      resenasList.length = 0;
 
-      resenasList.push(resena);
-    });
+      docs.forEach((doc) => {
+        let data = doc.data();
+        let fecha = new Date(data['fecha'].toDate());
+
+        let resena: Resenas = {
+          'ID': doc.id,
+          'bebedero': data['bebedero'],
+          'autor': data['autor'],
+          'fecha': fecha.toLocaleDateString(),
+          'hora': this.getTime(fecha),
+          'resena': data['resena']
+        };
+
+        resenasList.push(resena);
+      });
+    })
+
     return resenasList;
   }
 
@@ -111,12 +116,10 @@ export class FirestoreService {
     let result = await getDoc(doc(db, 'resenas', resenaID));
     let data = result.data();
     
-    let resena: Resenas = {
+    let resena: ResenaToSend = {
       'ID': result.id,
       'autor': '',
       'bebedero': '',
-      'fecha': '',
-      'hora': '',
       'resena': ''
     };
 
@@ -124,13 +127,20 @@ export class FirestoreService {
       resena.autor = data['autor'];
       resena.bebedero = data['bebedero'];
       resena.resena = data['resena'];
-      
-      let fecha = new Date(data['fecha'].toDate());
-      resena.fecha = fecha.toLocaleDateString();
-      resena.hora  =this.getTime(fecha);
     }
 
     return resena;
+  }
+
+  async updateResena(resena:ResenaToSend){
+    const db = getFirestore(initializeApp(environment.firebaseConfig));
+
+    return await setDoc(doc(db, 'resenas', resena.ID), {
+      'bebedero': resena.bebedero,
+      'autor': resena.autor,
+      'fecha': Timestamp.fromDate(new Date()),
+      'resena': resena.resena
+    });
   }
 
   async postNewResena(resena:Resenas){
